@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
   },
+  // PGlite bundles WASM and tar.gz that must remain external to the Next.js
+  // server bundle — otherwise the build traces them to /ROOT and fails to
+  // find pglite.data / unaccent.tar.gz at runtime.
+  serverExternalPackages: ["@electric-sql/pglite", "pg"],
+  turbopack: {},
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

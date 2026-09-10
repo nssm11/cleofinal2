@@ -8,6 +8,7 @@ import { getNavigationData } from "@/lib/navigation";
 import { Header } from "@/components/shell/header";
 import { Footer } from "@/components/shell/footer";
 import { CartDrawer } from "@/components/shell/cart-drawer";
+import { PointerLight } from "@/components/motion/pointer-light";
 
 export default async function SiteLayout({ children }: { children: ReactNode }) {
   const [{ groups, universes }, user, storeRows, upsells] = await Promise.all([
@@ -31,6 +32,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
 
   return (
     <div className="flex min-h-dvh flex-col">
+      <PointerLight />
       <Header groups={groups} mobileGroups={mobileGroups} user={user} wishlistCount={wishlistCount} />
       <main id="contenu" className="flex-1">{children}</main>
       <Footer universes={universes.map((u) => ({ slug: u.slug, name: u.name }))} stores={storeRows} />

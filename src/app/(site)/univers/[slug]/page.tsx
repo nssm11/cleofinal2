@@ -14,14 +14,29 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return c ? { title: `Univers ${c.name}`, description: c.description ?? undefined, openGraph: c.image ? { images: [c.image] } : undefined } : {};
 }
 
+function universeTone(slug: string): string {
+  // Category worlds — each has its own atmosphere but all belong to Cléopâtre
+  switch (slug) {
+    case "visage": return "bg-[#fdf8f0]"; // soft luminous skin-like
+    case "corps": return "bg-[#f9f5ec]"; // cream architectural
+    case "cheveux": return "bg-[#fdf6ec] border-stone"; // organic tactile
+    case "solaire": return "bg-[#fefcf8]"; // clean solar
+    case "bebe-maman": return "bg-[#fef9f0]"; // soft warmth
+    case "complements": return "bg-[#fbf6ee]"; // minimal
+    case "hygiene": return "bg-[#faf6ec]"; // French pharmacy precision
+    default: return "bg-paper";
+  }
+}
+
 export default async function UniversPage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<SP> }) {
   const [{ slug }, sp] = await Promise.all([params, searchParams]);
   const [u, all] = await Promise.all([getCategoryBySlug(slug), getUniverses()]);
   if (!u || !u.isUniverse) notFound();
   const idx = all.findIndex((x) => x.id === u.id);
   const others = all.filter((x) => x.id !== u.id);
+  const tone = universeTone(u.slug);
   return (
-    <>
+    <div className={tone}>
       <PageIntro
         index={`${String(idx + 1).padStart(2, "0")} / ${String(all.length).padStart(2, "0")}`}
         kicker="Univers"
@@ -63,6 +78,6 @@ export default async function UniversPage({ params, searchParams }: { params: Pr
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
