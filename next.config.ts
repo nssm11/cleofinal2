@@ -2,10 +2,17 @@ import type { NextConfig } from "next";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
+  // Preview (Arena LIVE PREVIEW) runs inside an iframe on *.e2b.app / *.arena.ai.
+  // DENY / SAMEORIGIN would make every page appear empty in the preview.
+  // We allow framing via CSP frame-ancestors and omit X-Frame-Options.
+  {
+    key: "Content-Security-Policy",
+    value:
+      "frame-ancestors 'self' https://*.e2b.app https://*.arena.ai https://*.e2b.dev http://localhost:* http://127.0.0.1:*",
+  },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin-allow-popups" },
   { key: "X-DNS-Prefetch-Control", value: "on" },
 ];
 
