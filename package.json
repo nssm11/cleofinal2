@@ -7,10 +7,13 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "db:push": "drizzle-kit push",
-    "db:seed": "tsx src/db/seed.ts"
+    "db:push": "tsx src/db/push.ts",
+    "db:push:pg": "drizzle-kit push",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:setup": "tsx src/db/push.ts && tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@fontsource-variable/manrope": "^5.3.0",
     "@fontsource-variable/newsreader": "^5.3.0",
     "dotenv": "17.3.1",

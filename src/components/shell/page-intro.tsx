@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { Parallax } from "@/components/motion/parallax";
 import { Breadcrumbs } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils";
 
@@ -31,9 +32,9 @@ export function PageIntro({
             {right && <div className="mt-9 flex flex-wrap items-center gap-4">{right}</div>}
           </div>
           {image && (
-            <div className={cn("frame aspect-[4/3] w-full lg:col-span-5 lg:aspect-[5/4]", dark && "border border-paper/10")}>
+            <Parallax offset={10} className={cn("frame aspect-[4/3] w-full lg:col-span-5 lg:aspect-[5/4]", dark && "border border-paper/10")}>
               <Image src={image} alt={imageAlt ?? ""} fill priority={imagePriority} sizes="(max-width:1024px) 100vw, 40vw" className="object-cover" />
-            </div>
+            </Parallax>
           )}
         </div>
         {children}

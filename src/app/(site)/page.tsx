@@ -7,6 +7,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { getFeatured, getPromoProducts, getUniverses, getConcerns } from "@/lib/catalog";
 import { ArrowRightIcon, CashIcon, ChatIcon, MapPinIcon, ShieldIcon, StoreIcon, TruckIcon } from "@/components/icons";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { Parallax } from "@/components/motion/parallax";
+import { ScrollAtmosphere } from "@/components/motion/scroll-atmosphere";
 import { ProductGrid } from "@/components/catalog/product-card";
 import { SectionHeading } from "@/components/ui/primitives";
 import { HeroText } from "@/components/shell/hero-text";
@@ -30,8 +32,14 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ══ 01 — ENTRÉE · campaign entrance ══ */}
+      {/* ══ 01 — ENTRÉE · campaign entrance — layered depth + parallax ══ */}
       <section className="relative overflow-hidden border-b border-stone">
+        {/* Architectural geometry — moves at different speeds than photography */}
+        <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden>
+          <Parallax offset={10} className="absolute left-[6%] top-[8%] h-px w-[18%]"><div className="h-px w-full bg-champagne/20" /></Parallax>
+          <Parallax offset={-12} className="absolute right-[8%] top-[18%] h-[34%] w-px"><div className="h-full w-px bg-stone-2/40" /></Parallax>
+          <Parallax offset={18} className="absolute bottom-[12%] left-[52%] h-20 w-20"><div className="h-full w-full border border-champagne/10" /></Parallax>
+        </div>
         <div className="container-lux grid min-h-[88svh] items-center gap-10 pb-16 pt-10 lg:grid-cols-12 lg:gap-8 lg:pb-24 lg:pt-16">
           <div className="relative z-10 lg:col-span-6 xl:col-span-6">
             <HeroText />
@@ -55,9 +63,10 @@ export default async function HomePage() {
           </div>
 
           <div className="relative lg:col-span-6">
-            <div className="frame-grain aspect-[4/5] w-full lg:aspect-[5/6]">
+            <Parallax offset={12} className="frame-grain aspect-[4/5] w-full lg:aspect-[5/6]">
               <Image src="/images/hero.jpg" alt="Nature morte éditoriale — soins Cléopâtre" fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
-            </div>
+            </Parallax>
+            <Parallax offset={-8} className="pointer-events-none absolute -right-3 -top-3 hidden h-[88%] w-[94%] lg:block"><div className="h-full w-full border border-champagne/15" /></Parallax>
             <Reveal delay={0.9} y={12} className="absolute -bottom-6 left-4 right-4 border border-stone bg-cream/95 p-5 shadow-soft backdrop-blur sm:left-auto sm:right-6 sm:w-72">
               <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-champagne-2"><ChatIcon size={13} /> Conseil pharmaceutique</p>
               <p className="mt-2 text-sm leading-relaxed text-charcoal">Une question sur un actif ou une routine ? Nos pharmaciens vous répondent, en boutique comme au 71 450 210.</p>
@@ -84,8 +93,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ══ 03 — UNIVERS · discovery ══ */}
-      <section className="container-lux py-section-sm lg:py-section">
+      {/* ══ 03 — UNIVERS · discovery — category worlds with atmosphere ══ */}
+      <ScrollAtmosphere className="border-b border-stone">
+        <section className="container-lux py-section-sm lg:py-section">
         <Reveal>
           <SectionHeading
             eyebrow="Explorer par univers"
@@ -113,6 +123,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+      </ScrollAtmosphere>
 
       {/* ══ 04 — SÉLECTION · desire ══ */}
       <section className="border-y border-stone bg-cream">
@@ -272,7 +283,7 @@ export default async function HomePage() {
       {/* ══ 09 — BOUTIQUES · presence ══ */}
       <section className="bg-cream">
         <div className="container-lux grid items-center gap-12 py-section-sm lg:grid-cols-12 lg:py-section">
-          <Reveal className="relative order-2 aspect-[4/3] lg:order-1 lg:col-span-6 lg:aspect-[5/4]">
+          <Parallax offset={10} className="relative order-2 aspect-[4/3] lg:order-1 lg:col-span-6 lg:aspect-[5/4]">
             <div className="frame-grain absolute inset-0">
               <Image src="/images/maison.jpg" alt="La maison Cléopâtre — parapharmacie Ezzahra" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
             </div>
@@ -280,7 +291,7 @@ export default async function HomePage() {
               <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-champagne-2"><MapPinIcon size={13} /> Le Grand Tunis</p>
               <p className="mt-1 text-sm text-charcoal">Ezzahra · Hammam-Lif</p>
             </div>
-          </Reveal>
+          </Parallax>
           <div className="order-1 lg:order-2 lg:col-span-6">
             <Reveal>
               <p className="eyebrow mb-6">La maison</p>
